@@ -1,16 +1,10 @@
-# calculate
+# Calculate
 
-A flutter calculator application.
+This is a simple application built using flutter framework.
 
-## Getting Started
+## Completed
+1. Added a basic calculator layout for the app.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## TODO
+1. Implement backend of the app using the logic from the calc2.py file from the simple-interpreter repo. The app will be able to evaluate expressions containing parentheses, addition, subtraction, multiplicaton and division. This stage will only have suport for multi-digit integer numbers. Support for floating point numbers will be included in a later stage.
+2. Extend functionality to evaluate expressions containing floating point numbers and functions like sin, cos, log, etc.
