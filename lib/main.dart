@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:calculate/calculator.dart';
 
 void main() {
   return runApp(
@@ -22,7 +23,9 @@ class CalcPage extends StatefulWidget {
 
 class _CalcPageState extends State<CalcPage> {
 
-  String result = '';
+  num result = 0;
+  Interpreter interpreter;
+  bool isEvaluated = false;
   TextEditingController controller = TextEditingController();
   
   Row buildButtonRow({List<String> labels = const ['eg1', 'eg2', 'eg3']}) {
@@ -42,6 +45,11 @@ class _CalcPageState extends State<CalcPage> {
                 controller.text = controller.text.substring(0, controller.text.length - 1);
               });
             },
+            onLongPress: () {
+              setState(() {
+                controller.text = '';
+              });
+            },
             color: Colors.blueGrey.shade600,
             textColor: Colors.white,
             child: Text(
@@ -58,7 +66,34 @@ class _CalcPageState extends State<CalcPage> {
           child: FlatButton(
             onPressed: () {
               setState(() {
-
+                interpreter = Interpreter(controller.text);
+                result = interpreter.expr();
+                controller.text = result.toString();
+                isEvaluated = true;
+              });
+            },
+            color: Colors.blueGrey.shade600,
+            textColor: Colors.white,
+            child: Text(
+                labels[i],
+                style: TextStyle(
+                  fontSize: 20.0,
+                )
+            ),
+          ),
+        ));
+      }
+      else if (labels[i] == 'Ans') {
+        list.add(Expanded(
+          child: FlatButton(
+            onPressed: () {
+              setState(() {
+                if (isEvaluated) {
+                  controller.text = result.toString();
+                  isEvaluated = false;
+                }
+                else
+                  controller.text = controller.text + result.toString();
               });
             },
             color: Colors.blueGrey.shade600,
@@ -77,7 +112,12 @@ class _CalcPageState extends State<CalcPage> {
           child: FlatButton(
             onPressed: () {
               setState(() {
-                controller.text = controller.text + labels[i];
+                if (isEvaluated) {
+                  controller.text = labels[i];
+                  isEvaluated = false;
+                }
+                else
+                  controller.text = controller.text + labels[i];
               });
             },
             color: Colors.blueGrey.shade600,
@@ -134,7 +174,7 @@ class _CalcPageState extends State<CalcPage> {
             ),
             SizedBox(height: 4.0,),
             Expanded(
-              child: buildButtonRow(labels: ['1', '2', '3', '*', 'space']),
+              child: buildButtonRow(labels: ['1', '2', '3', '*', 'Ans']),
             ),
             SizedBox(height: 4.0),
             Expanded(
